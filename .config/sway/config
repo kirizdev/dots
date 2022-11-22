@@ -14,7 +14,7 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu bemenu-run | dmenu | xargs swaymsg exec --
+set $menu bemenu-run | xargs swaymsg exec --
 
 # This is gonna be autostart section ig.
 exec waybar
@@ -27,7 +27,7 @@ exec waybar
 output * bg #4e4e4e solid_color 
 
 # Remove title bar and change the color of focused window 
-default_border pixel 1
+default_border pixel 2
 
 # Don't uncomment, please
 #client.focused "#333333" "#aaaaaa" "#111111" "#aaaaaa" "#aaaaaa"
@@ -76,6 +76,15 @@ gaps inner 4
 
     # Start your launcher
     bindsym $mod+d exec $menu
+
+    # Volume control
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+    # Brightness control
+    bindsym XF86MonBrightnessDown exec light -U 5
+    bindsym XF86MonBrightnessUp exec light -A 5
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
