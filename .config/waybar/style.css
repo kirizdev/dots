@@ -5,8 +5,8 @@
 }
 
 window#waybar {
-    background: @theme_base_color;
-    color: #d5d5d5;/*@theme_text_color;*/
+    background: #1E1E1E;
+    color: #d5d5d5;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -134,10 +134,6 @@ label:focus {
 
 #temperature.critical {
     background-color: #eb4d4b;
-}
-
-#tray {
-	/*background-color: #2980b9;*/
 }
 
 #tray > .passive {

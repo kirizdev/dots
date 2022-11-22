@@ -202,17 +202,4 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-#bar {
-#    position top
-#    status_command i3status-rs 
-#    colors {
-#        statusline #ffffff
-#        background #323232
-#        active_workspace #32323200 #32323200 #5c5c5c
-#    }
-#}
-
 include /etc/sway/config.d/*
