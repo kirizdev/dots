@@ -1,11 +1,11 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: JetBrains Mono, FontAwesome;
+    font-family: GohuNew, FontAwesome;
     font-size: 14px;
 }
 
 window#waybar {
-    background: #1E1E1E;
+    background: #111111;
     color: #d5d5d5;
     transition-property: background-color;
     transition-duration: .5s;
