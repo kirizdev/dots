@@ -1,0 +1,13 @@
+font=GohuNew
+text-alignment=center
+width=300
+height=300
+padding=15
+margin=15
+border-size=1
+
+default-timeout=10000
+
+background-color=#111111
+text-color=#d5d5d5
+border-color=#d5d5d5
