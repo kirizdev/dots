@@ -27,14 +27,14 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>",
-        "format": "{:%a %I:%M}",
-	"interval": 1,
-	"format-alt": "{:%Y-%m-%d}"
+	"format": "{:%I:%M %p}",
+	"interval": 2,
+	"format-alt": "{:%m-%d-%Y}",
     },
     "memory": {
-	"interval": 10,
+	"interval": 5,
 	"tooltip": false,
-        "format": "{used} GiB "
+        "format": "{used:0.1f} GiB "
     },
     "temperature": {
         "critical-threshold": 80,
@@ -48,22 +48,22 @@
             "warning": 35,
             "critical": 20 
         },
-        "format": "{capacity}% {icon}",
+        "format": "{icon}",
         "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-	"format-time": "{H}h {M}min",
-        "format-icons": ["", "", "", "", ""]
+        "format-alt": "{capacity}% {icon}",
+	"format-time": "{H}h. {M}min.",
+        "format-icons": ["", "", "", "", ""],
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{essid} ",
         "format-disconnected": "Disconnected ⚠"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "{volume}%  ",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -75,4 +75,3 @@
         "on-click": "pavucontrol"
     }
 }
-
