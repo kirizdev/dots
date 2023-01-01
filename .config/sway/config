@@ -10,7 +10,7 @@ set $right l
 
 set $term foot
 
-set $menu j4-dmenu-desktop --term foot --dmenu 'bemenu -H 25 --nf "#4e4e4e" --hf "#d5d5d5" --af "#4e4e4e" --tf "#d5d5d5" --fn "Terminus 11" --hp 6 --cw 6 --ch 20 -i' --no-generic | xargs swaymsg exec --
+set $menu j4-dmenu-desktop --term foot --dmenu 'wofi -d -i' --no-generic | xargs swaymsg exec --
 
 # This is gonna be autostart section ig.
 exec waybar
