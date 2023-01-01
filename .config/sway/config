@@ -15,6 +15,9 @@ set $menu j4-dmenu-desktop --term foot --dmenu 'wofi -d -i' --no-generic | xargs
 # This is gonna be autostart section ig.
 exec waybar
 
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+
 #
 ### Output configuration
 #
