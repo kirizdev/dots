@@ -3,6 +3,14 @@
 	font-size: 14px;
 }
 
+tooltip {
+	background: rgba(17, 17, 17, 0.95);
+}
+
+tooltip label {
+	color: #d5d5d5;
+}
+
 window#waybar {
 	background: #111111;
 	color: #d5d5d5;
@@ -12,15 +20,6 @@ window#waybar {
 
 window#waybar.hidden {
 	opacity: 0.2;
-}
-
-window#waybar.termite {
-	background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-	background-color: #000000;
-	border: none;
 }
 
 button {
