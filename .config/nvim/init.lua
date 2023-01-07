@@ -14,7 +14,7 @@ require("packer").startup(function (use)
 	use "wbthomason/packer.nvim"
 
 	use {
-    "RRethy/nvim-base16",
+		"RRethy/nvim-base16",
 		config = function()
 			require("base16-colorscheme").setup("theme")
 		end
@@ -29,12 +29,11 @@ require("packer").startup(function (use)
 			require("nvim-tree").setup()	
 		end
 	}
-
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    run = function()
-      require("nvim-treesitter").setup()
-    end
-  }
+	
+	use {
+		"nvim-treesitter/nvim-treesitter",
+		run = function()
+			require("nvim-treesitter").setup()
+		end
+	}
 end)
-
