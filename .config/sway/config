@@ -7,12 +7,12 @@ set $right l
 
 set $term foot
 
-set $menu j4-dmenu-desktop --term foot --dmenu 'wofi -i -d' --no-generic | xargs swaymsg exec --
+set $menu j4-dmenu-desktop --term foot --dmenu "wofi -i -d" --no-generic | xargs swaymsg exec --
 
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 
 ### Apperance
-output * bg /home/kyryl/Pictures/walll.jpg fill
+output * bg ~/Pictures/wallpaper.png fill
 
 default_border pixel 1
 
@@ -44,8 +44,8 @@ input "type:keyboard" {
 
     bindsym $mod+d exec $menu
 
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
     bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $WOBSOCK
