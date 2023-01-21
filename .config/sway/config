@@ -11,9 +11,14 @@ set $menu j4-dmenu-desktop --term foot --dmenu "wofi -i -d" --no-generic | xargs
 
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 
-### Apperance
-output * bg ~/Pictures/wallpaper.png fill
+### General
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
 
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
+
+### Apperance
 default_border pixel 1
 
 client.focused          "#4e4e4e" "#111111" "#d5d5d5" "#d5d5d5" "#4e4e4e"
@@ -24,6 +29,9 @@ client.urgent           "#eb4d4b" "#eb4d4b" "#111111" "#eb4d4b" "#eb4d4b"
 font pango:Terminus 10
 
 gaps inner 4
+
+### Output
+output * bg ~/Pictures/wallpaper.png fill
 
 ### Input
 input "type:touchpad" {
@@ -51,8 +59,7 @@ input "type:keyboard" {
     bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $WOBSOCK
     bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $WOBSOCK
 
-    bindsym Print exec grimshot --notify copy area
-    bindsym Shift+Print exec grimshot --notify copy window
+    bindsym Print exec grim - | swayimg -f - & /usr/share/sway/scripts/grimshot --notify copy area && pkill -n swayimg
 
     bindsym $mod+Shift+n exec swaylock 
 
@@ -142,17 +149,12 @@ input "type:keyboard" {
     }
     bindsym $mod+r mode "resize"
 
-
-### Bar
-bar {
-    swaybar_command waybar
-}
-
 ### Autostart
+exec waybar
 exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+exec wl-paste -t text --watch clipman store --no-persist
 exec swayidle -w \
     timeout 300 "swaymsg 'output * power off'" resume "swaymsg 'output * power on'" \
     before-sleep "swaylock"
-exec wl-paste -t text --watch clipman store --no-persist
 
 include /etc/sway/config.d/*
