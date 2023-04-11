@@ -11,3 +11,6 @@ default-timeout=10000
 background-color=#111111
 text-color=#d5d5d5
 border-color=#d5d5d5
+
+[mode=dnd]
+invisible=1
