@@ -11,13 +11,6 @@ set $menu wofi -i --show drun
 
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 
-### General
-for_window [class="^.*"] inhibit_idle fullscreen
-for_window [app_id="^.*"] inhibit_idle fullscreen
-
-bindswitch --reload --locked lid:on output eDP-1 disable
-bindswitch --reload --locked lid:off output eDP-1 enable
-
 ### Apperance
 default_border pixel 2
 
@@ -70,6 +63,8 @@ input "type:keyboard" {
 
     bindsym $mod+Shift+p exec cliphist list | wofi -d -M fuzzy -W 30% | cliphist decode | wl-copy
     
+    bindsym $mod+Alt+s exec makoctl dismiss
+
     floating_modifier $mod normal
 
     bindsym $mod+Shift+c reload
@@ -154,17 +149,45 @@ input "type:keyboard" {
         bindsym Escape mode "default"
     }
     bindsym $mod+r mode "resize"
+    
+
+### Rules 
+for_window {
+    [class = "^.*"] inhibit_idle fullscreen
+    [app_id = "^.*"] inhibit_idle fullscreen
+    [window_role = "pop-up"] floating enable
+    [window_role = "bubble"] floating enable
+    [window_role = "dialog"] floating enable
+    [window_type = "dialog"] floating enable
+    [window_role = "task_dialog"] floating enable
+    [window_type = "menu"] floating enable
+
+    [app_id = "pavucontrol"] floating enable, resize 720px 500px
+    [app_id = "keepassxc"] floating enable, resize set 1200px 800px
+    [app_id = "syncthing-gtk"] floating enable
+    [title = "Media viewer"] floating enable
+    [title = "nmtui"] floating enable
+
+    [shell="xwayland"] title_format "<span>[X] %title</span>"
+}
+
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
 
 ### Autostart
-exec waybar
-exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
-exec wl-paste --watch cliphist store
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec swayidle -w \
-    timeout 300 "swaylock" \
-    timeout 300 "swaymsg 'output * power off'" resume "swaymsg 'output * power on'" \
-    before-sleep "swaylock -f"
+exec_always {
+    gsettings set org.gnome.desktop.wm.preferences button-layout ''
+}
+
+exec {
+    syncthing-gtk
+    waybar
+    rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+    wl-paste --watch cliphist store
+    swayidle -w \
+        timeout 300 "swaylock" \
+        timeout 300 "swaymsg 'output * power off'" resume "swaymsg 'output * power on'" \
+        before-sleep "swaylock -f"
+}
 
 include /etc/sway/config.d/*
