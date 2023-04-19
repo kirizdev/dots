@@ -58,18 +58,16 @@ input "type:keyboard" {
     bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $WOBSOCK
 
     bindsym Print exec flameshot gui
-    
-    bindsym $mod+Shift+n exec swaylock
 
-    bindsym $mod+Shift+p exec cliphist list | wofi -d -M fuzzy -W 30% | cliphist decode | wl-copy
+    bindsym $mod+Shift+p exec cliphist list | wofi -d -M fuzzy -W 35% -r "printf '%.75s'" | cliphist decode | wl-copy
     
-    bindsym $mod+Alt+s exec makoctl dismiss
+    bindsym $mod+n exec makoctl dismiss
 
     floating_modifier $mod normal
 
     bindsym $mod+Shift+c reload
 
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec wlogout -p layer-shell -r 10 -c 10
 # Moving around:
     bindsym $mod+$left focus left
     bindsym $mod+$down focus down
@@ -176,7 +174,7 @@ bindswitch --reload --locked lid:off output eDP-1 enable
 
 ### Autostart
 exec_always {
-    gsettings set org.gnome.desktop.wm.preferences button-layout ''
+    gsettings set org.gnome.desktop.wm.preferences button-layout ':close'
 }
 
 exec {
