@@ -2,12 +2,7 @@ set scrolloff 10
 set preview true
 set icons true
 set previewer ctpv
-set hidden
-
-map x $$f
-map X !$f
-
-map d
+set cleaner ctpvclear
 
 cmd open &{{
     case $(file --mime-type -Lb $f) in
@@ -19,12 +14,10 @@ cmd open &{{
 cmd delete ${{
   set -f
   printf "$fx\n"
-  printf "delete?[y/n]"
+  printf "delete? [y/n]"
   read ans
   [ "$ans" = "y" ] && rm -rf $fx
 }}
-
-map <delete> delete
 
 cmd extract ${{
     set -f
@@ -38,13 +31,17 @@ cmd extract ${{
     esac
 }}
 
+cmd dragdrop %dragon-drop -a -x $fx
+cmd dragdrop-stay %dragon-drop $fx
+
+cmd share $curl -F"file=@$fx" https://0x0.st | wl-copy
+
+map . set hidden!
+map x $$f
+map X !$f
+map o &mimeopen $f
+map O $mimeopen --ask $f
+map d
 map E extract
-
-cmd dragon-drop %dragon-drop -a -x $fx
-cmd dragon-drop-stay %dragon-drop $fx
-
-map dr dragon-drop
-
-cmd share ${{
-	curl -F"file=@$fx" https://0x0.st | wl-copy
-}}
+map <delete> delete
+map dr dragdrop
