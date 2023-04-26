@@ -80,6 +80,6 @@
             "headset": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pgrep pavucontrol && killall pavucontrol || pavucontrol"
     }
 }
