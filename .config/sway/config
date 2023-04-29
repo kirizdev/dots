@@ -152,7 +152,7 @@ input "type:keyboard" {
 ### Rules 
 for_window {
     [class="^.*"] inhibit_idle fullscreen
-    [app_id="^.*"] inhibit_idle fullscreen
+
     [window_role="pop-up"] floating enable
     [window_role="bubble"] floating enable
     [window_role="dialog"] floating enable
@@ -163,8 +163,11 @@ for_window {
     [app_id="pavucontrol"] floating enable, resize 720px 500px
     [app_id="keepassxc"] floating enable, resize set 1200px 800px
     [app_id="syncthing-gtk"] floating enable
+    [app_id="nm-connection-editor"] floating enable
+    [app_id="flameshot"] floating enable
+    [app_id="^.*"] inhibit_idle fullscreen
+    
     [title="Media viewer"] floating enable
-    [title="nmtui"] floating enable
 
     [shell="xwayland"] title_format "<span>[X] %title</span>"
 }
@@ -184,9 +187,8 @@ exec {
     rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
     wl-paste --watch cliphist store
     swayidle -w \
-        timeout 300 "swaylock" \
+        timeout 300 "swaylock -f" \
         timeout 300 "swaymsg 'output * power off'" resume "swaymsg 'output * power on'" \
-        before-sleep "swaylock -f"
 }
 
 include /etc/sway/config.d/*
