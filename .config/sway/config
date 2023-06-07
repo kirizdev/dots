@@ -33,7 +33,7 @@ input "type:touchpad" {
 }
 
 input "type:keyboard" {
-    xkb_layout us,ua
+    xkb_layout us,ru,ua
     repeat_rate 25
     repeat_delay 450
     xkb_options grp:win_space_toggle
@@ -43,9 +43,21 @@ input "type:keyboard" {
 # Basics:
     bindsym --no-repeat $mod+Return exec $term
 
-    bindsym $mod+Shift+q kill
+    bindsym --to-code {
+        $mod+Shift+q kill
+        
+        $mod+d exec tofi-drun --terminal $term | xargs swaymsg exec
 
-    bindsym $mod+d exec wofi -i --show drun
+        $mod+Shift+p exec cliphist list | tofi --width 35% | cliphist decode | wl-copy
+        
+        $mod+n exec makoctl dismiss
+        
+        $mod+Shift+w exec swayr switch-window
+        
+        $mod+Shift+c reload
+        
+        $mod+Shift+e exec wlogout -p layer-shell -r 10 -c 10
+    }
 
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
@@ -57,32 +69,26 @@ input "type:keyboard" {
 
     bindsym Print exec flameshot gui
 
-    bindsym $mod+Shift+p exec cliphist list | wofi -d -M fuzzy -W 35% -r "printf '%.75s'" | cliphist decode | wl-copy
-    
-    bindsym $mod+n exec makoctl dismiss
-    
-    bindsym $mod+Shift+w exec swayr switch-window
-     
     floating_modifier $mod normal
 
-    bindsym $mod+Shift+c reload
-
-    bindsym $mod+Shift+e exec wlogout -p layer-shell -r 10 -c 10
 # Moving around:
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
+    bindsym --to-code {
+        $mod+$left focus left
+        $mod+$down focus down
+        $mod+$up focus up
+        $mod+$right focus right
+
+        $mod+Shift+$left move left
+        $mod+Shift+$down move down
+        $mod+Shift+$up move up
+        $mod+Shift+$right move right
+    }
 
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
     bindsym $mod+Right focus right
 
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
 
     bindsym $mod+Shift+Left move left
     bindsym $mod+Shift+Down move down
@@ -114,29 +120,33 @@ input "type:keyboard" {
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
 # Layout:
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    bindsym --to-code {
+        $mod+b splith
+        $mod+v splitv
 
-    bindsym $mod+s layout stacking
-    bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
+        $mod+s layout stacking
+        $mod+w layout tabbed
+        $mod+e layout toggle split
 
-    bindsym $mod+f fullscreen
+        $mod+f fullscreen
 
-    bindsym $mod+Shift+f floating toggle
+        $mod+Shift+f floating toggle
+
+        $mod+a focus parent
+    }
 
     bindsym $mod+Alt+space focus mode_toggle
-
-    bindsym $mod+a focus parent
 # Scratchpad:
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
 # Resizing containers:
     mode "resize" {
-        bindsym $left resize shrink width 40px
-        bindsym $down resize grow height 40px
-        bindsym $up resize shrink height 40px
-        bindsym $right resize grow width 40px
+        bindsym --to-code {
+            $left resize shrink width 40px
+            $down resize grow height 40px
+            $up resize shrink height 40px
+            $right resize grow width 40px
+        }
 
         bindsym Left resize shrink width 40px
         bindsym Down resize grow height 40px
@@ -146,8 +156,7 @@ input "type:keyboard" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
-    bindsym $mod+r mode "resize"
-    
+    bindsym --to-code $mod+r mode "resize"
 
 ### Rules 
 for_window {
@@ -181,14 +190,13 @@ exec_always {
 }
 
 exec {
-    syncthing-gtk
-    swayrd
     waybar
+    flameshot
+    swayrd
+    syncthing-gtk
     rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
     wl-paste --watch cliphist store
     swayidle -w \
         timeout 300 "swaylock -f" \
         timeout 300 "swaymsg 'output * power off'" resume "swaymsg 'output * power on'" \
 }
-
-include /etc/sway/config.d/*
