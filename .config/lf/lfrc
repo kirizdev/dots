@@ -35,8 +35,8 @@ cmd extract ${{
 
 cmd dragdrop %dragon-drop -a -x $fx
 cmd dragdrop-stay %dragon-drop $fx
-
 cmd share $curl -F"file=@$fx" https://0x0.st | wl-copy
+cmd qrcp %qrcp $fx
 
 map . set hidden!
 map x $$f
